@@ -2,7 +2,10 @@
   <div class="container-flid py-2">
     <div class="row">
       <div class="col-12 h4 mb-3">Создайте новую задачу</div>
+    </div>
+    <form class="row">
       <div class="col-8">
+
         <b-form-input
           type="text"
           placeholder="Введите текст"
@@ -11,6 +14,7 @@
       </div>
       <div class="col-4 ">
         <b-button
+          type="submit"
           block
           variant="secondary"
           @click="addTask"
@@ -18,7 +22,9 @@
           >Добавить задачу</b-button
         >
       </div>
-      <div class="col-12 pt-2 text-left">
+    </form>
+      <div class="row">
+        <div class="col-12 pt-2 text-left">
         <b-form-group>
           <label 
             v-for="item in taskPriorityOptions"
@@ -38,6 +44,7 @@
             >
           </label>
         </b-form-group>
+      </div>
       </div>
     </div>
   </div>

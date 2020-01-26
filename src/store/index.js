@@ -5,27 +5,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentTasks: {
-      1: {
-        id: 1,
-        text: "dsd 1",
-        priority: 1
-      },
-      2: {
-        id: 2,
-        text: "dsd 2",
-        priority: 2
-      },
-      3: {
-        id: 3,
-        text: "Сделать 3",
-        priority: 3
-      }
-    },
+    currentTasks: [
+    ],
     currentTasksLastId: 4,
-    sucsessTasks: {
-
-    },
+    sucsessTasks: [],
     priorityIcons: {
       1: "star",
       2: "sun",
@@ -33,17 +16,36 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    initialiseStore(state) {
+			// Check if the ID exists
+			if(localStorage.getItem('store')) {
+				// Replace the state object with the stored item
+				this.replaceState(
+					Object.assign(state, JSON.parse(localStorage.getItem('store')))
+				);
+			}
+		},
     addTask(state, payload) {
-      let id =payload.id
-      Vue.set(state.currentTasks, id, payload);
-      state.currentTasksLastId++;
+      // let id = payload.id
+      // Vue.set(state.currentTasks, id, payload);
+      state.currentTasks.push(payload)
+      // state.currentTasksLastId++;
     },
     removeTask(state, id) {
+      
       Vue.delete( state.currentTasks, id )
     },
     compleateTask(state, id) {
-      Vue.set(state.sucsessTasks, id, state.currentTasks[id]);
+      // Vue.set(state.sucsessTasks, id, state.currentTasks[id]);
+      // console.log(state.sucsessTasks)
+      state.sucsessTasks.push(state.currentTasks[id]);
       Vue.delete( state.currentTasks, id )
+    },
+    updateList(state, newList) {
+      state.currentTasks = newList;
+    },
+    updateSucsessList(state, newList) {
+      state.sucsessTasks = newList;
     }
   },
   actions: {},

@@ -5,6 +5,8 @@ import "./plugins/bootstrap-vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import draggable from 'vuedraggable'
+
 
 // COMPONENTS
 import navbar from "./components/NavBar.vue";
@@ -16,11 +18,18 @@ Vue.component("v-navbar", navbar);
 Vue.component("v-todo-new", todoNew);
 Vue.component("v-todo-list", todoList);
 Vue.component("v-todo-sucsess-list", sucsessList);
+Vue.component("draggable", draggable);
 
 Vue.config.productionTip = false;
 
-new Vue({
+const app = new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeCreate() {
+		this.$store.commit('initialiseStore');
+	}
 }).$mount("#app");
+app.$store.subscribe((mutation, state) => {
+  localStorage.setItem('store', JSON.stringify(state));
+})
